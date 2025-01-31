@@ -53,6 +53,17 @@
         }
 
     }
+    ; 检查代理是否可用
+    CheckNet() {
+        ; 设置代理
+        proxy_enable := RegRead("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings", "ProxyEnable")
+        if proxy_enable == 0 {
+            MsgBox("请先打开代理")
+            return false
+        } else {
+            return true
+        }
+    }
 
     ; 设置搜索引擎
     GetMapConfig() {

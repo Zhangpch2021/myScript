@@ -1,0 +1,66 @@
+{
+    "Goole": {
+        "url": "https://www.google.com/search?q=",
+        "needNet": true
+    },
+    "Baidu": {
+        "url": "https://www.baidu.com/s?wd=",
+        "needNet": false
+    },
+    "Bilibili": {
+        "url": "https://search.bilibili.com/all?keyword=",
+        "needNet": false
+    },
+    "Github": {
+        "url": "https:github.com/search?q=",
+        "needNet": true
+    },
+    "YouTube": {
+        "url": "https://www.youtube.com/results?search_query=",
+        "needNet": true
+    },
+    "CNKI": {
+        "url": "https://kns.cnki.net/kns/search?q=",
+        "needNet": false
+    },
+    "Baidu Sch": {
+        "url": "https://xueshu.baidu.com/s?wd=",
+        "needNet": false
+    },
+    "Google Sch": {
+        "url": "https://scholar.google.com/scholar?q=",
+        "needNet": true
+    },
+    "CSDN": {
+        "url": "https://so.csdn.net/so/search?q=",
+        "needNet": false
+    },
+    "ZhiHu": {
+        "url": "https://www.zhihu.com/search?type=content&q=",
+        "needNet": false
+    },
+    "S.O.": {
+        "url": "https://stackoverflow.com/search?q=",
+        "needNet": true
+    },
+    "RedNote": {
+        "url": "https://www.xiaohongshu.com/search_result?keyword=",
+        "needNet": false
+    },
+    "NowCoder": {
+        "url": "https://www.nowcoder.com/search/all?type=all&query=",
+        "needNet": false
+    },
+    "Deepl": {
+        "url": "https://www.deepl.com/translator#en/zh/",
+        "needNet": false
+    },
+    "Goole Trans": {
+        "url": "https://translate.google.com/?sl=zh-CN&tl=en&text=",
+        "needNet": true
+    },
+    "Youdao Tran": {
+        "url": "https://fanyi.youdao.com/index.html#/",
+        "needNet": false
+    }
+}
