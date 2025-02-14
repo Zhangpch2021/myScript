@@ -1,17 +1,15 @@
 ﻿; 设置工作路径为当前文件夹
 
+; SetWorkingDir "D:\code\Scripts\autohotkey\myScript\Search"
 #Include JSON.ahk
 #Include ../sqlite/SQLite.ahk
-SetWorkingDir "D:\code\Scripts\autohotkey\myScript\Search"
 CheckNet() {
     ; 设置代理
     proxy_enable := RegRead("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings", "ProxyEnable")
     if proxy_enable == 0 {
         MsgBox("请先打开代理")
-        return false
-    } else {
-        return true
     }
+    return proxy_enable
 }
 !s::
 {
@@ -21,55 +19,68 @@ CheckNet() {
     MyGui.SetFont("s12 bold")
 
     ; 抽象出一个创建函数
-    CreateListBox(MyGui, arr, name, options) {
-        if name == "Engines" {
+    CreateListBox(MyGui, name, arr, options) {
+        if name == "引擎" {
             MyGui.Add("Text", "h18 Checked", name)
         } else {
             MyGui.Add("Text", "h18 ym", name)
         }
 
-        return MyGui.AddListBox(options, arr).OnEvent("Change", ChangeEngine)
+        tmp := MyGui.AddListBox(options, arr)
+        tmp.OnEvent("Change", ChangeEngine)
+        return tmp
     }
     ; 选中一个后，其他listbox取消选中
     ChangeEngine(this, *) {
-        box_list := [engines, forums, academics, translates]
-        for index, box in box_list {
+        for index, box in BoxList {
             if box != this {
                 box.Value := ""
             } else {
                 ; 选中的box的值赋给src，value是序号
+                label := this.name
                 src := box.Text
             }
         }
 
     }
-    arr := [
-        ["Goole", "Baidu", "Bilibili", "GitHub", "Youtube"],
-        ["S.O.", "CSDN", "RedNote", "ZhiHu", "NowCoder"],
-        ["CNKI", "Baidu Sch", "Google Sch"],
-        ["Deepl", "Goole Tran", "Youdao Tran"]
-    ]
-
-    engines := CreateListBox(MyGui, arr[1], "Engines", "vEngines r5 w100 choose1")
-    forums := CreateListBox(MyGui, arr[2], "Forums", "vForums r5 w100")
-    academics := CreateListBox(MyGui, arr[3], "Academic", "vAcademic r5 w100")
-    translates := CreateListBox(MyGui, arr[4], "Translate", "vTranslate r5 w100")
+    path := "../config/search.json"
+    global_cfg := GetConfig(path)
+    arr := []
+    BoxList := []
+    labelList := []
+    for k, v in global_cfg {
+        tmp := []
+        for k1, v1 in v {
+            tmp.Push(k1)
+        }
+        labelList.Push(k)
+        arr.Push(tmp)
+        cfg := 'v' k ' r5 w100'
+        BoxList.Push(CreateListBox(MyGui, k, tmp, cfg))
+    }
 
 
     MyGui.Add("Text", "h18 xm", "keywords")
-    MyGui.Add("Edit", "vEdit w400 -WantReturn")
+    ; 读取数据库记录
+    result := DBread(5)
+    MyGui.Add("ComboBox", "vColorChoice w400", result)
     MyGui.Add("Button", "x+10 default", "OK").OnEvent("Click", RunWebPage)
 
     MyGui.Show
-    ControlFocus("Edit1", "Swift Search")
+    ControlFocus("ComboBox1", "Swift Search")
 
-    DBread() {
+    DBread(lines) {
         ; 读取数据库
         db := SQLite('test.db', SQLITE_OPEN_READONLY)
-        sql := "SELECT * FROM search_record Limit 3;"
-        result := db.Exec(sql)
+        sql := "SELECT * FROM search_record ORDER BY id DESC Limit '" lines "';"
+        resp := db.Exec(sql)
         db.Close()
-        return result
+
+        res := []
+        loop lines {
+            res.Push(resp[A_Index, 'text'])
+        }
+        return res
     }
 
     DBdump(code) {
@@ -87,26 +98,24 @@ CheckNet() {
         Exit()
     }
 
-    src := "Goole"
+    label := "引擎"
+    src := "Google"
     context := ""
-    ; 设置搜索引擎
-    GetConfig() {
-        ; 读文件
-        file := "search.json"
-        if !FileExist(file) {
-            ; 获取当前文件夹路径
-            path := A_ScriptDir
-            MsgBox("未找到配置文件：" path "\" file)
+
+    GetConfig(path) {
+        if !FileExist(path) {
+            MsgBox("未找到配置文件：" path)
             ExitGui(0)
         }
-        js := FileRead(file)
-        SE := json.parse(js, true, true)
-        return SE
+        js := FileRead(path, "UTF-8")
+        return json.parse(js, true, true)
+
     }
 
     ; 处理用户输入
     InputProcess() {
-        context := MyGui.Submit().Edit
+
+        context := MyGui.Submit().ColorChoice
         ; 识别网址
         if (RegExMatch(context, "https?://\S+") == 1) {
             Run(context) ; 直接打开网址
@@ -119,10 +128,11 @@ CheckNet() {
             ; 根据组号和索引号选择src
             group_num := Integer(SubStr(prefix, 1, 1))
             index_num := Integer(SubStr(prefix, 3, 1))
-            if ((group_num <= arr.Length && group_num > 0) && (index_num > 0 && index_num <= arr[group_num].Length)) {
+            if ((group_num <= arr.Length) && (index_num <= arr[group_num].Length)) {
+                label := labelList[group_num]
                 src := arr[group_num][index_num]
             } else {
-                MsgBox("输入错误：" prefix "\n跳转至默认引擎")
+                MsgBox("输入错误：" prefix "`n跳转至默认引擎")
             }
             context := SubStr(context, 5)
         }
@@ -131,22 +141,17 @@ CheckNet() {
 
     RunWebPage(thisGui, *) {
         InputProcess()
-        SE := GetConfig()
         ; 根据 src 查找对应的搜索引擎信息
-        if !SE.Has(src) {
-            MsgBox("未找到对应的搜索引擎：" src)
+        engine := global_cfg[label][src]
+        if (engine["needProxy"] && !CheckNet()) { ; 检查代理是否可用
             ExitGui(0)
+        } else if (src == "Youdao Tran") {
+            Run(engine["url"]) ; 打开有道翻译
+            A_Clipboard := context
         } else {
-            engine := SE[src]
-            if (engine["needNet"] && !CheckNet()) { ; 检查代理是否可用
-                ExitGui(0)
-            } else if (src == "有道翻译") {
-                Run(engine["url"]) ; 打开有道翻译
-                A_Clipboard := context
-            } else {
-                Run(engine["url"] context)
-            }
-            ExitGui(1)
+            Run(engine["url"] context)
         }
+        ExitGui(1)
+
     }
 }

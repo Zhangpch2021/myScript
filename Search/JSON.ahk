@@ -68,11 +68,12 @@ class JSON {
 							}
 						}
 					}
-				} else if A || InStr(t, ':') > 1
+				} else if A || InStr(t, ':') > 1 {
 					throw Error("Malformed JSON - unrecognized character.", 0, SubStr(t, 1, 1) " in " t)
-			} else if NQ && (P .= A_LoopField '"', 1)
+				}
+			} else if NQ && (P .= A_LoopField '"', 1) {
 				continue
-			else if A
+			} else if A
 				LF := P A_LoopField, C.Push(InStr(LF, "\") ? UC(LF) : LF), P := ""
 			else if V
 				LF := P A_LoopField, map_set(C, K, InStr(LF, "\") ? UC(LF) : LF), K := V := P := ""
@@ -88,7 +89,7 @@ class JSON {
 					v .= (t := m.Get(SubStr(A_LoopField, 1, 1), 0)) ? t SubStr(A_LoopField, 2) :
 						(t := RegExMatch(A_LoopField, "i)^(u[\da-f]{4}|x[\da-f]{2})\K")) ?
 							Chr("0x" SubStr(A_LoopField, 2, t - 2)) SubStr(A_LoopField, t) : "\" A_LoopField,
-							e := A_LoopField = "" ? e : !e
+						e := A_LoopField = "" ? e : !e
 			return v
 		}
 	}
