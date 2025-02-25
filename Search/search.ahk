@@ -143,7 +143,11 @@ CheckNet() {
         InputProcess()
         ; 根据 src 查找对应的搜索引擎信息
         engine := global_cfg[label][src]
-        if (engine["needProxy"] && !CheckNet()) { ; 检查代理是否可用
+        net := CheckNet()
+        if (engine["needProxy"]) { ; 检查代理是否可用
+            if src == "Google" {
+
+            }
             ExitGui(0)
         } else if (src == "Youdao Tran") {
             Run(engine["url"]) ; 打开有道翻译
