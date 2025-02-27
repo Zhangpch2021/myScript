@@ -1,13 +1,13 @@
-﻿#Include Search\search.ahk
+﻿; #Include Search\search.ahk
 path := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\" ; 程序路径
 
 #/:: Shutdown 1 ;关机
 #\:: Shutdown 6 ;重启
 #0:: run "rundll32.exe powrProf.dll,SetSuspendState" ;休眠
 #9:: DllCall("PowrProf\SetSuspendState", "int", 0, "int", 0, "int", 0) ; 睡眠
-; 永久删除
+
 #w:: send "+{Delete}" ; 按下shift键
-; 打开管理员权限终端
+
 #c:: Run "*RunAs cmd.exe" ; 打开cmd
 
 ; 媒体控制

@@ -1,14 +1,9 @@
-﻿; 设置工作路径为当前文件夹
-
-; SetWorkingDir "D:\code\Scripts\autohotkey\myScript\Search"
+﻿; SetWorkingDir "D:\code\Scripts\autohotkey\myScript\Search"
 #Include JSON.ahk
 #Include ../sqlite/SQLite.ahk
+
 CheckNet() {
-    ; 设置代理
     proxy_enable := RegRead("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings", "ProxyEnable")
-    if proxy_enable == 0 {
-        MsgBox("请先打开代理")
-    }
     return proxy_enable
 }
 !s::
@@ -21,7 +16,7 @@ CheckNet() {
     ; 抽象出一个创建函数
     CreateListBox(MyGui, name, arr, options) {
         if name == "引擎" {
-            MyGui.Add("Text", "h18 Checked", name)
+            MyGui.Add("Text", "h18 Checked Choose1", name)
         } else {
             MyGui.Add("Text", "h18 ym", name)
         }
@@ -43,7 +38,7 @@ CheckNet() {
         }
 
     }
-    path := "../config/search.json"
+    path := "Engines.json"
     global_cfg := GetConfig(path)
     arr := []
     BoxList := []
@@ -99,7 +94,6 @@ CheckNet() {
     }
 
     label := "引擎"
-    src := "Google"
     context := ""
 
     GetConfig(path) {
@@ -113,7 +107,7 @@ CheckNet() {
     }
 
     ; 处理用户输入
-    InputProcess() {
+    getEngineName() {
 
         context := MyGui.Submit().ColorChoice
         ; 识别网址
@@ -140,17 +134,16 @@ CheckNet() {
     }
 
     RunWebPage(thisGui, *) {
-        InputProcess()
+        getEngineName()
         ; 根据 src 查找对应的搜索引擎信息
         engine := global_cfg[label][src]
         net := CheckNet()
-        if (engine["needProxy"]) { ; 检查代理是否可用
-            if src == "Google" {
-
-            }
+        if (engine["needProxy"] && !net) {
+            MsgBox("请先打开代理")
             ExitGui(0)
         } else if (src == "Youdao Tran") {
-            Run(engine["url"]) ; 打开有道翻译
+            Run(engine["url"])
+            MsgBox("请手动粘贴")
             A_Clipboard := context
         } else {
             Run(engine["url"] context)
