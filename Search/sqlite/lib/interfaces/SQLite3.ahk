@@ -45,7 +45,7 @@ class SQLite3
 	static bin := 'sqlite3' A_PtrSize * 8 '.dll'
 
 	/** @prop {string} dllPath Path to the `SQLite3` DLL */
-	static dllPath := A_IsCompiled ? A_ScriptDir '\lib\bin' : A_LineFile '\..\..\bin'
+	static dllPath := A_IsCompiled ? A_ScriptDir '\sqlite\lib\bin' : A_LineFile '\..\..\bin'
 
 	/** @prop {Map} ptrs Map of pointers to `SQLite3` functions */
 	static ptrs := Map()
@@ -62,8 +62,8 @@ class SQLite3
 			&& !FileExist(SQLite3.dllPath '\' SQLite3.bin)
 		{
 			DirCreate SQLite3.dllPath
-			FileInstall A_LineFile '\..\..\bin\sqlite332.dll', SQLite3.dllPath, true
-			FileInstall A_LineFile '\..\..\bin\sqlite364.dll', SQLite3.dllPath, true
+			FileInstall '.\sqlite\lib\bin\sqlite332.dll', SQLite3.dllPath, true
+			FileInstall '.\sqlite\lib\bin\sqlite364.dll', SQLite3.dllPath, true
 		}
 		SQLite3.dllPath .= '\' SQLite3.bin
 
