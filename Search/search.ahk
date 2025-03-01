@@ -1,6 +1,6 @@
 ﻿; SetWorkingDir "D:\code\Scripts\autohotkey\myScript\Search"
 #Include JSON.ahk
-#Include ../sqlite/SQLite.ahk
+#Include ./sqlite/SQLite.ahk
 
 CheckNet() {
     proxy_enable := RegRead("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings", "ProxyEnable")
@@ -66,7 +66,7 @@ CheckNet() {
 
     DBread(lines) {
         ; 读取数据库
-        db := SQLite('test.db', SQLITE_OPEN_READONLY)
+        db := SQLite('record.db', SQLITE_OPEN_READONLY)
         sql := "SELECT * FROM search_record ORDER BY id DESC Limit '" lines "';"
         resp := db.Exec(sql)
         db.Close()
@@ -80,7 +80,7 @@ CheckNet() {
 
     DBdump(code) {
         ; 保留历史记录到数据库
-        db := SQLite('test.db', SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE)
+        db := SQLite('record.db', SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE)
         ; 记录time\text\src\success
         time := FormatTime(A_Now, "yyyy-MM-dd HH:mm:ss")
         sql := "INSERT INTO search_record (time, text, src, success) VALUES ('" time "', '" context "', '" src "', " code ");"
@@ -93,6 +93,7 @@ CheckNet() {
         Exit()
     }
 
+    src := "Google"
     label := "引擎"
     context := ""
 
