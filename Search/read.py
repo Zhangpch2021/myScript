@@ -9,7 +9,7 @@ def read_json(file_path):
     return data
 
 
-path = "../config/search.json"
+path = "Engines.json"
 data = read_json(path)
 # print(type(data)) -- dict
 # pprint(data, indent=4, width=10)

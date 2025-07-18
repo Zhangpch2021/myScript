@@ -1,0 +1,66 @@
+{
+    "1.引擎": {
+        "1.Google": {
+            "url": "https://www.google.com/search?q=",
+            "Proxy": true
+        },
+        "2.Bing": {
+            "url": "http://www.bing.com/search?q=",
+            "Proxy": false
+        },
+        "3.Bilibili": {
+            "url": "https://search.bilibili.com/all?keyword=",
+            "Proxy": false
+        },
+        "4.YouTube": {
+            "url": "https://www.youtube.com/results?search_query=",
+            "Proxy": true
+        }
+    },
+    "2.程序员": {
+        "1.CSDN": {
+            "url": "https://so.csdn.net/so/search?q=",
+            "Proxy": false
+        },
+        "2.StackOver": {
+            "url": "https://stackoverflow.com/search?q=",
+            "Proxy": true
+        },
+        "3.Github": {
+            "url": "https:github.com/search?q=",
+            "Proxy": true
+        },
+        "4.DeepSeek": {
+            "url": "https://chat.deepseek.com/search?q=",
+            "Proxy": false
+        }
+    },
+    "3.论坛": {
+        "1.ZhiHu": {
+            "url": "https://www.zhihu.com/search?type=content&q=",
+            "Proxy": false
+        },
+        "2.RedNote": {
+            "url": "https://www.xiaohongshu.com/search_result?keyword=",
+            "Proxy": false
+        },
+        "3.NowCoder": {
+            "url": "https://www.nowcoder.com/search/all?type=all&query=",
+            "Proxy": false
+        }
+    },
+    "4.翻译": {
+        "1.Deepl(zh)": {
+            "url": "https://www.deepl.com/translator#en/zh/",
+            "Proxy": false
+        },
+        "2.Google(en)": {
+            "url": "https://translate.google.com/?sl=zh-CN&tl=en&text=",
+            "Proxy": true
+        },
+        "3.Youdao": {
+            "url": "https://fanyi.youdao.com/index.html#/",
+            "Proxy": false
+        }
+    }
+}

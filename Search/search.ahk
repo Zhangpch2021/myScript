@@ -15,10 +15,11 @@ CheckNet() {
 
     ; 抽象出一个创建函数
     CreateListBox(MyGui, name, arr, options) {
-        if name == "引擎" {
+        if name == "1.引擎" {
             MyGui.Add("Text", "h18 Checked Choose1", name)
+            options := options " Choose1"
         } else {
-            MyGui.Add("Text", "h18 ym", name)
+            MyGui.Add("Text", "h18 ym", name)  
         }
 
         tmp := MyGui.AddListBox(options, arr)
@@ -38,7 +39,7 @@ CheckNet() {
         }
 
     }
-    path := "Engines.json"
+    path := "../config/Engines.json"
     global_cfg := GetConfig(path)
     arr := []
     BoxList := []
@@ -50,7 +51,7 @@ CheckNet() {
         }
         labelList.Push(k)
         arr.Push(tmp)
-        cfg := 'v' k ' r5 w100'
+        cfg := 'v' k ' r5 w110'
         BoxList.Push(CreateListBox(MyGui, k, tmp, cfg))
     }
 
@@ -93,8 +94,8 @@ CheckNet() {
         Exit()
     }
 
-    src := "Google"
-    label := "引擎"
+    src := "1.Google"
+    label := "1.引擎"
     context := ""
 
     GetConfig(path) {
@@ -138,14 +139,17 @@ CheckNet() {
         getEngineName()
         ; 根据 src 查找对应的搜索引擎信息
         engine := global_cfg[label][src]
-        net := CheckNet()
-        if (engine["needProxy"] && !net) {
-            MsgBox("请先打开代理")
-            ExitGui(0)
-        } else if (src == "Youdao Tran") {
+
+        if (src == "Youdao Tran") {
             Run(engine["url"])
-            MsgBox("请手动粘贴")
             A_Clipboard := context
+            MsgBox("请手动粘贴")
+        } else if (engine["Proxy"] == true) {
+            if (CheckNet() == 0) {
+                MsgBox("请先打开代理", "提示", 0x1000)
+            } else {
+                Run(engine["url"] context)
+            }
         } else {
             Run(engine["url"] context)
         }
