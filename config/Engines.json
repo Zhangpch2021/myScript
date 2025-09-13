@@ -1,5 +1,5 @@
 {
-    "1.引擎": {
+    "引擎": {
         "1.Google": {
             "url": "https://www.google.com/search?q=",
             "Proxy": true
@@ -17,7 +17,7 @@
             "Proxy": true
         }
     },
-    "2.程序员": {
+    "程序员": {
         "1.CSDN": {
             "url": "https://so.csdn.net/so/search?q=",
             "Proxy": false
@@ -30,12 +30,12 @@
             "url": "https:github.com/search?q=",
             "Proxy": true
         },
-        "4.DeepSeek": {
+        "4.DeepSeek": { 
             "url": "https://chat.deepseek.com/search?q=",
             "Proxy": false
         }
     },
-    "3.论坛": {
+    "论坛": {
         "1.ZhiHu": {
             "url": "https://www.zhihu.com/search?type=content&q=",
             "Proxy": false
@@ -49,7 +49,7 @@
             "Proxy": false
         }
     },
-    "4.翻译": {
+    "翻译": {
         "1.Deepl(zh)": {
             "url": "https://www.deepl.com/translator#en/zh/",
             "Proxy": false
