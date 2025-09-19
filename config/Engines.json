@@ -1,66 +1,66 @@
 {
     "引擎": {
-        "Google": {
+        "1.Google": {
             "url": "https://www.google.com/search?q=",
-            "needProxy": true
+            "Proxy": true
         },
-        "Bing": {
+        "2.Bing": {
             "url": "http://www.bing.com/search?q=",
-            "needProxy": false
+            "Proxy": false
         },
-        "Bilibili": {
+        "3.Bilibili": {
             "url": "https://search.bilibili.com/all?keyword=",
-            "needProxy": false
+            "Proxy": false
         },
-        "YouTube": {
+        "4.YouTube": {
             "url": "https://www.youtube.com/results?search_query=",
-            "needProxy": true
+            "Proxy": true
         }
     },
     "程序员": {
-        "CSDN": {
+        "1.CSDN": {
             "url": "https://so.csdn.net/so/search?q=",
-            "needProxy": false
+            "Proxy": false
         },
-        "S.O.": {
+        "2.StackOver": {
             "url": "https://stackoverflow.com/search?q=",
-            "needProxy": true
+            "Proxy": true
         },
-        "Github": {
+        "3.Github": {
             "url": "https:github.com/search?q=",
-            "needProxy": true
+            "Proxy": true
         },
-        "DeepSeek": {
-            "url": "https://www.deepcode.ai/search?q=",
-            "needProxy": false
+        "4.DeepSeek": { 
+            "url": "https://chat.deepseek.com/search?q=",
+            "Proxy": false
         }
     },
     "论坛": {
-        "ZhiHu": {
+        "1.ZhiHu": {
             "url": "https://www.zhihu.com/search?type=content&q=",
-            "needProxy": false
+            "Proxy": false
         },
-        "RedNote": {
+        "2.RedNote": {
             "url": "https://www.xiaohongshu.com/search_result?keyword=",
-            "needProxy": false
+            "Proxy": false
         },
-        "NowCoder": {
+        "3.NowCoder": {
             "url": "https://www.nowcoder.com/search/all?type=all&query=",
-            "needProxy": false
+            "Proxy": false
         }
     },
     "翻译": {
-        "Deepl": {
+        "1.Deepl(zh)": {
             "url": "https://www.deepl.com/translator#en/zh/",
-            "needProxy": false
+            "Proxy": false
         },
-        "Goole Trans": {
+        "2.Google(en)": {
             "url": "https://translate.google.com/?sl=zh-CN&tl=en&text=",
-            "needProxy": true
+            "Proxy": true
         },
-        "Youdao Tran": {
+        "3.Youdao": {
             "url": "https://fanyi.youdao.com/index.html#/",
-            "needProxy": false
+            "Proxy": false
         }
     }
 }

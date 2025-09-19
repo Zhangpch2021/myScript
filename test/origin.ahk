@@ -18,7 +18,6 @@
 
 !S:: run "C:\Users\21282\AppData\Roaming\Spotify\Spotify.exe"
 !k:: run "C:\Users\21282\Downloads\decompress\geek\geek.exe"
-!a:: run "C:\Users\21282\Downloads\decompress\AdventureCN - v5.6++\Adventure\adventure64.exe"
 
 !r:: Run "::{645ff040-5081-101b-9f08-00aa002f954e}"  ; 打开回收站.
 !e:: run "sysdm.cpl"
